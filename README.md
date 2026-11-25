@@ -6,6 +6,13 @@ Everything the UI does is also available to agents through a REST API (OpenAPI),
 
 No paid tiers, no feature gates, no limits beyond the networks' own. MIT licensed.
 
+> ### Want the cloud version?
+> **[Register your interest at huhbyteai.com](https://huhbyteai.com/#waitlist)** and let's build it together. Tell us what you would
+> want it to do. Until then, enjoy the free version: everything in this repo is yours to run today.
+
+**Follow the build:** [Instagram @huhbyte.ai](https://www.instagram.com/huhbyte.ai/) · LinkedIn [Ram](https://www.linkedin.com/in/ramprasad26/) and
+[Laxman](https://www.linkedin.com/in/laxmanprasadsomaraju/) · [huhbyteai.com](https://huhbyteai.com)
+
 Runs on your own machine or any server. It does not need any hosted service, account or domain of ours: your
 data (SQLite + media) stays in one folder or Docker volume, and you connect networks with your own developer apps.
 
@@ -17,9 +24,28 @@ data (SQLite + media) stays in one folder or Docker volume, and you connect netw
 | ![Composer with live previews](docs/screenshots/composer.webp) **Composer** | ![Comment inbox](docs/screenshots/community.webp) **Community inbox** |
 | ![Insights](docs/screenshots/insights.webp) **Insights** | ![Landing page](docs/screenshots/landing.webp) **Optional landing page** |
 
-Contents: [Quick start](#quick-start) · [Exposure window](#before-you-put-it-on-the-internet-the-exposure-window) ·
+Contents: [Our story](#our-story) · [Cloud waitlist](#cloud-version-and-waitlist) · [Quick start](#quick-start) · [Exposure window](#before-you-put-it-on-the-internet-the-exposure-window) ·
 [Connect networks](#connect-your-networks) · [Host it](#host-it-vps-home-server-flyio-railway-render) ·
-[Waitlist](#where-is-the-waitlist) · [Features](#features) · [Agents and development](#agents-cli-and-development)
+[Features](#features) · [Agents and development](#agents-cli-and-development)
+
+## Our story
+
+We are twins, new to social media. We started [huhbyte.ai](https://www.instagram.com/huhbyte.ai/), a faceless channel on Instagram.
+We had never edited a video before, and editing beat us, so we built HuhQueue Studio to do it.
+
+Then came the bills. We love the social apps we used, and each one does its job well. But with that many subscriptions we ended up
+with no money. So we put scheduling, a link-in-bio page and an inbox in one app and made it free: an open source Buffer, so nobody
+has to pay to schedule.
+
+We still have no followers. Maybe we are doing it wrong, so we let an agent handle it. That is why every button here is also an
+API, an MCP tool and a terminal command.
+
+Welcome to the HuhByte family. If you like it:
+
+- **Follow** [huhbyte.ai on Instagram](https://www.instagram.com/huhbyte.ai/).
+- **Connect** on LinkedIn with [Ram](https://www.linkedin.com/in/ramprasad26/) and [Laxman](https://www.linkedin.com/in/laxmanprasadsomaraju/).
+- **Star** this repo, and [open an issue](https://github.com/dataanalystram/Openbuffer/issues) to tell us what you want or what broke.
+- **Join** the [cloud waitlist](https://huhbyteai.com/#waitlist).
 
 ## Quick start
 
@@ -98,24 +124,19 @@ Scheduled posts only go out while the app runs, so use an always-on host with a 
 Every setting is an environment variable listed in [.env.example](.env.example). Run only one instance per data
 volume (SQLite, one worker).
 
-## Where is the waitlist?
+## Cloud version and waitlist
 
-The repo includes a public landing page with a waitlist, used by the site that hosts HuhbyteAI. **It is off by default**:
-on your install `/welcome` and `/waitlist` answer 404 and nothing is collected unless you set `HUHQ_LANDING=1`.
-
-| What | Where |
-|---|---|
-| The page and the form | `/welcome`, form at `/welcome#waitlist` (source: [huhqueue/static/landing](huhqueue/static/landing)) |
-| Backend | `POST /waitlist` ([waitlist_api.py](huhqueue/api/waitlist_api.py), [waitlist.py](huhqueue/services/waitlist.py)) |
-| Storage | table `waitlist_entries` in the install's own SQLite database; signups are never in this repo |
-| Reading signups | owner or admin only: open `/api/waitlist?format=csv` while signed in, or `huhqueue run waitlist.list` |
+**The waitlist is at [huhbyteai.com/#waitlist](https://huhbyteai.com/#waitlist).** Two lists: HuhbyteAI in the cloud (hosted for you, no
+server to run) and HuhQueue Studio as open source. Say what you would want it to do, and we can build it together.
 
 ![The waitlist form](docs/screenshots/waitlist.webp)
 
-Personal data: emails and notes are **encrypted at rest**, never logged, and readable by the owner and admins only (no
-public endpoint returns them). Input is validated and capped, with a honeypot, per-IP and total rate limits, one row per
-email, and no IP addresses stored. The form has a consent line and links to `/privacy`. Details:
-[docs/LANDING.md](docs/LANDING.md).
+Your email goes to our own database, is used only to write to you about what you picked, and is deleted when you ask
+([privacy](https://huhbyteai.com/privacy)). Signups are never stored in this repo, and **your own install sends nothing to us**.
+
+The landing page is also in this repo, **off by default**: `/welcome` and `/waitlist` answer 404 unless you set `HUHQ_LANDING=1`. Then
+your install keeps its own list, with emails and notes encrypted in its database and readable by its owner and admins only. How that
+works: [docs/LANDING.md](docs/LANDING.md).
 
 ## Teams
 

@@ -264,7 +264,8 @@
   const form = $('#wl-form'), err = $('#wl-err');
   const done = () => { form.hidden = true; $('#wl-done').hidden = false; };
   if (/[?&]joined=ok\b/.test(location.search)) done();
-  const MSG = { invalid_email: 'Add a valid email address.', pick_a_list: 'Pick at least one list.', limited: 'Too many tries. Wait a minute and try again.' };
+  const MSG = { invalid_email: 'Add a valid email address.', pick_a_list: 'Pick at least one list.', limited: 'Too many tries. Wait a minute and try again.',
+    bot: 'We could not check that you are a person. Wait for the check above the button, then try again.', bad_domain: 'That address cannot receive email. Use one we can write to.' };
   form.addEventListener('submit', async (e) => {
     e.preventDefault();
     const email = $('#wl-email').value.trim();
@@ -274,10 +275,11 @@
     const btn = $('#wl-send'); btn.disabled = true;
     try {
       const res = await fetch('/waitlist', { method: 'POST', headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email, cloud: wlCloud.checked, studio: wlStudio.checked, note: $('#wl-note').value, website: $('#wl-website').value }) });
+        body: JSON.stringify({ email, cloud: wlCloud.checked, studio: wlStudio.checked, note: $('#wl-note').value, website: $('#wl-website').value,
+          referrer: document.referrer, turnstile: new FormData(form).get('cf-turnstile-response') || '' }) });
       const body = await res.json().catch(() => ({}));
-      if (res.ok) done(); else err.textContent = MSG[body.status] || 'Something went wrong. Please try again.';
-    } catch (x) { err.textContent = 'Could not reach the server. Please try again.'; }
+      if (res.ok) done(); else { err.textContent = MSG[body.status] || 'Something went wrong. Please try again.'; window.turnstile?.reset('#wl-turnstile'); }
+    } catch (x) { err.textContent = 'Could not reach the server. Please try again.'; window.turnstile?.reset('#wl-turnstile'); }
     btn.disabled = false;
   });
   $$('#wl-form input[type=checkbox], #wl-email').forEach((el) => el.addEventListener('input', () => { err.textContent = ''; }));
