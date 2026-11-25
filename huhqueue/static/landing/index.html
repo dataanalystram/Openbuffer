@@ -211,7 +211,7 @@
     <div style="display: flex; flex-direction: column; gap: 22px">
       <div style="font-weight: 700">Our second product</div>
       <h2 class="h2 rv" style="max-width: 8em">HuhQueue Studio</h2>
-      <p class="lede rv">Paste one link. Approve one week. It runs as a hosted app today.</p>
+      <p class="lede rv">Paste one link. Approve one week. It runs as a hosted app today, and we are deciding whether to open source it too.</p>
     </div>
     <ul class="steps4" style="margin-top: clamp(28px,3vw,44px)"><li>An agent researches it</li><li>Renders it in your brand</li><li>Learns your corrections</li><li>You approve, then Buffer</li></ul>
 
@@ -238,9 +238,9 @@
         <div style="font-family: var(--disp); font-weight: 900; font-size: clamp(40px,4.6vw,68px); line-height: .9">Should Studio be open source?</div>
         <div role="group" aria-label="Your vote" style="display: flex; flex-wrap: wrap; gap: 10px">
           <button class="btn vote" id="vote-yes" type="button" aria-pressed="false">Yes, open source it</button>
-          <button class="btn ghost vote" id="vote-no" type="button" aria-pressed="false">Hosted is fine</button>
+          <button class="btn ghost vote" id="vote-no" type="button" aria-pressed="false">I would use it hosted</button>
         </div>
-        <p id="vote-msg" aria-live="polite" style="margin: 0; min-height: 28px; font-weight: 500"><span id="vote-msg-text">Tell me which you would use.</span> <a id="vote-link" href="#waitlist" hidden style="font-weight: 700; text-underline-offset: 4px">Join the waitlist</a></p>
+        <p id="vote-msg" aria-live="polite" style="margin: 0; min-height: 28px; font-weight: 500"><span id="vote-msg-text">Tell us which you would use. Your pick is filled in on the waitlist form.</span> <a id="vote-link" href="#waitlist" hidden style="font-weight: 700; text-underline-offset: 4px">Go to the form to finish</a></p>
       </div>
     </div>
     <p style="margin: 24px 0 0; font-size: 15px">Built on the Buffer API. Not made or endorsed by Buffer.</p>
@@ -300,12 +300,14 @@
       </div>
       <form id="wl-form" method="post" action="/waitlist" novalidate style="display: flex; flex-direction: column; gap: 20px">
         <fieldset style="border: 0; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 10px; min-width: 0">
-          <legend style="font-weight: 700; padding: 0; margin-bottom: 10px">What should I tell you about?</legend>
-          <label class="opt"><input id="wl-cloud" name="cloud" type="checkbox"><span style="display: flex; flex-direction: column; line-height: 1.25"><span style="font-weight: 700">HuhbyteAI in the cloud</span><span style="font-size: 15px; color: var(--ink2)">Hosted for you. No server to run.</span></span></label>
-          <label class="opt"><input id="wl-studio" name="studio" type="checkbox"><span style="display: flex; flex-direction: column; line-height: 1.25"><span style="font-weight: 700">HuhQueue Studio, open source</span><span style="font-size: 15px; color: var(--ink2)">A self-hosted, open source release.</span></span></label>
+          <legend style="font-weight: 700; padding: 0; margin-bottom: 4px">What do you want to hear about?</legend>
+          <p style="margin: 0 0 6px; font-size: 15px; color: var(--ink2)">Tick one or more. The free version you can run yourself is already on GitHub.</p>
+          <label class="opt"><input id="wl-cloud" name="cloud" type="checkbox"><span style="display: flex; flex-direction: column; line-height: 1.25"><span style="font-weight: 700">HuhbyteAI Cloud</span><span style="font-size: 15px; color: var(--ink2)">We run it for you. You sign in and post. No server, no setup.</span></span></label>
+          <label class="opt"><input id="wl-studio" name="studio" type="checkbox"><span style="display: flex; flex-direction: column; line-height: 1.25"><span style="font-weight: 700">HuhQueue Studio, open source</span><span style="font-size: 15px; color: var(--ink2)">Free code you download and run yourself. You host it.</span></span></label>
+          <label class="opt"><input id="wl-studio-hosted" name="studio_hosted" type="checkbox"><span style="display: flex; flex-direction: column; line-height: 1.25"><span style="font-weight: 700">HuhQueue Studio, hosted</span><span style="font-size: 15px; color: var(--ink2)">We run Studio for you, like the cloud version.</span></span></label>
         </fieldset>
         <div class="field"><label for="wl-email">Email</label><input id="wl-email" name="email" type="email" autocomplete="email" placeholder="you@example.com"></div>
-        <div class="field"><label for="wl-note">Your thoughts <span style="font-weight: 400; color: var(--ink2)">(optional)</span></label><textarea id="wl-note" name="note" maxlength="1000" placeholder="What would you want it to do?"></textarea></div>
+        <div class="field"><label for="wl-note">Anything you want to tell us? <span style="font-weight: 400; color: var(--ink2)">(optional)</span></label><textarea id="wl-note" name="note" maxlength="1000" placeholder="What would you want it to do? Which networks do you use? Write as much as you like."></textarea></div>
         <div aria-hidden="true" style="position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden"><label>Website<input id="wl-website" name="website" type="text" tabindex="-1" autocomplete="off"></label></div>
         <p id="wl-err" aria-live="polite" style="margin: 0; min-height: 22px; font-weight: 600; color: #B8260A"></p>
         <!-- turnstile -->

@@ -57,10 +57,12 @@ def subscribe(core, form: dict, ip: str = "", referrer: str = "") -> str:
     email = str(form.get("email") or "").strip().lower()
     if len(email) > MAX_EMAIL or not EMAIL.fullmatch(email):
         return "invalid_email"
-    cloud, studio = _bool(form.get("cloud")), _bool(form.get("studio"))
-    if not (cloud or studio):
+    cloud, studio, hosted = _bool(form.get("cloud")), _bool(form.get("studio")), _bool(form.get("studio_hosted"))
+    if not (cloud or studio or hosted):
         return "pick_a_list"
     note = str(form.get("note") or "").strip()[:MAX_NOTE]
+    if hosted:   # this install keeps two lists, so "Studio hosted" is recorded as a line in the note
+        note = ("Wants Studio hosted. " + note).strip()[:MAX_NOTE]
     key = _hash(core, email)
     try:
         with core.db.session() as s:

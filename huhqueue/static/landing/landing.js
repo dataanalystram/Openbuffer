@@ -250,32 +250,33 @@
   $('#agent-copy').addEventListener('click', () => copy($('#agent-pre').textContent, $('#agent-pre'), $('#agent-copy'), 'Copied', 'Selected, press Copy'));
 
   /* ------------------------------------------------------------------ Studio vote + waitlist */
-  const wlStudio = $('#wl-studio'), wlCloud = $('#wl-cloud');
+  const wlStudio = $('#wl-studio'), wlCloud = $('#wl-cloud'), wlHosted = $('#wl-studio-hosted');
   const vote = (v) => {
     $('#vote-yes').setAttribute('aria-pressed', String(v === 'yes')); $('#vote-no').setAttribute('aria-pressed', String(v === 'no'));
-    $('#vote-msg-text').textContent = v === 'yes' ? 'Noted, thank you.' : v === 'no' ? 'Noted. Hosted it is.' : 'Tell me which you would use.';
-    $('#vote-link').hidden = v !== 'yes';
-    if (v === 'yes') wlStudio.checked = true; else if (v === 'no') wlStudio.checked = false;
+    $('#vote-msg-text').textContent = v === 'yes' ? 'Ticked "Studio, open source" on the waitlist form.' : v === 'no' ? 'Ticked "Studio, hosted" on the waitlist form.' : 'Tell us which you would use. Your pick is filled in on the waitlist form.';
+    $('#vote-link').hidden = !v;
+    wlStudio.checked = v === 'yes'; wlHosted.checked = v === 'no';
   };
   $('#vote-yes').addEventListener('click', () => vote('yes'));
   $('#vote-no').addEventListener('click', () => vote('no'));
-  wlStudio.addEventListener('change', () => { if (wlStudio.checked) vote('yes'); });
+  wlStudio.addEventListener('change', () => { if (wlStudio.checked) vote('yes'); else if (!wlHosted.checked) vote(null); });
+  wlHosted.addEventListener('change', () => { if (wlHosted.checked) vote('no'); else if (!wlStudio.checked) vote(null); });
 
   const form = $('#wl-form'), err = $('#wl-err');
   const done = () => { form.hidden = true; $('#wl-done').hidden = false; };
   if (/[?&]joined=ok\b/.test(location.search)) done();
-  const MSG = { invalid_email: 'Add a valid email address.', pick_a_list: 'Pick at least one list.', limited: 'Too many tries. Wait a minute and try again.',
+  const MSG = { invalid_email: 'Add a valid email address.', pick_a_list: 'Tick at least one thing you want to hear about.', limited: 'Too many tries. Wait a minute and try again.',
     bot: 'We could not check that you are a person. Wait for the check above the button, then try again.', bad_domain: 'That address cannot receive email. Use one we can write to.' };
   form.addEventListener('submit', async (e) => {
     e.preventDefault();
     const email = $('#wl-email').value.trim();
     if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) { err.textContent = MSG.invalid_email; return; }
-    if (!wlCloud.checked && !wlStudio.checked) { err.textContent = MSG.pick_a_list; return; }
+    if (!wlCloud.checked && !wlStudio.checked && !wlHosted.checked) { err.textContent = MSG.pick_a_list; return; }
     err.textContent = '';
     const btn = $('#wl-send'); btn.disabled = true;
     try {
       const res = await fetch('/waitlist', { method: 'POST', headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email, cloud: wlCloud.checked, studio: wlStudio.checked, note: $('#wl-note').value, website: $('#wl-website').value,
+        body: JSON.stringify({ email, cloud: wlCloud.checked, studio: wlStudio.checked, studio_hosted: wlHosted.checked, note: $('#wl-note').value, website: $('#wl-website').value,
           referrer: document.referrer, turnstile: new FormData(form).get('cf-turnstile-response') || '' }) });
       const body = await res.json().catch(() => ({}));
       if (res.ok) done(); else { err.textContent = MSG[body.status] || 'Something went wrong. Please try again.'; window.turnstile?.reset('#wl-turnstile'); }

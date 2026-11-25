@@ -44,7 +44,7 @@ You host HuhbyteAI yourself, so your server is your own cost.
 Paste one link. Approve one week. An agent researches the story, renders it in your brand, learns your corrections, and plans it in Buffer once you approve. Runs as a hosted app today. Built on the Buffer API, not made or endorsed by Buffer. Open question: should Studio be open source? Answer on the human page or join the waitlist.
 
 ## Waitlist
-Two lists: HuhbyteAI in the cloud (hosted for you), and HuhQueue Studio as open source (self-hosted).
+Three choices (tick any): HuhbyteAI Cloud (we run it for you), HuhQueue Studio open source (you run it), HuhQueue Studio hosted (we run it). There is also a free-text note.
 Next, free and open source: generate videos (soon), edit videos (soon), schedule them (ready), auto-reply to comments and DMs (soon), the kind of automation ManyChat and Chatfuel do, in the same app.
 Note from the maker: I love every social app I use. Each one does its job well. But with this many tools and subscriptions, I ended up with no money. So I'm putting them in one app and making it free.
 We are twins. LinkedIn (maker): https://www.linkedin.com/in/ramprasad26/  LinkedIn (twin and cofounder): https://www.linkedin.com/in/laxmanprasadsomaraju/
