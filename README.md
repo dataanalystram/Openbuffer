@@ -1,4 +1,4 @@
-# HuhQueue
+# HuhByte AI
 
 **A free, self-hosted social media scheduler (Buffer-style) for Instagram, YouTube, X, TikTok and LinkedIn, built AI-native.**
 Write once, schedule everywhere, answer comments, and read your insights from one small Python app with a React UI.
