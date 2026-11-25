@@ -1,0 +1,436 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>HuhbyteAI: post everywhere</title>
+<meta name="description" content="A free, open source, self-hosted Buffer and Linktree for Instagram, YouTube, TikTok, X and LinkedIn. Every button is also an API, an MCP tool and a terminal command, so any agent can run it.">
+<meta property="og:title" content="HuhbyteAI: post everywhere. Your agent can too.">
+<meta property="og:description" content="Free, open source scheduler, link in bio and inbox. Headless: every button is also an API.">
+<meta property="og:image" content="/welcome/img/mark.png">
+<link rel="icon" href="/static/favicon.png">
+<link rel="alternate" type="text/markdown" href="/welcome.md">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Sofia+Sans+Extra+Condensed:wght@700;800;900&family=Sofia+Sans:wght@400;500;700;800&family=Spline+Sans+Mono:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="/welcome/landing.css">
+</head>
+<body>
+<div class="hq" style="--lav: #C9ACFA; --sig: #FF5B3A">
+<div class="side"><div class="mode" role="group" aria-label="Who is reading">
+  <button class="mbtn" type="button" aria-pressed="true" data-mode="human">For humans</button>
+  <button class="mbtn" type="button" aria-pressed="false" data-mode="agent">For agents</button>
+</div></div>
+
+<div id="human">
+<!-- HERO -->
+<div style="background: var(--paper)">
+<header class="wrap" style="display: flex; align-items: center; gap: 32px; padding-top: 18px; padding-bottom: 12px">
+  <a href="#top" style="display: flex; align-items: center; gap: 10px; text-decoration: none; font-weight: 800; font-size: 23px; letter-spacing: -.02em; min-height: 44px; margin-right: auto"><img src="/welcome/img/mark.png" alt="" style="width: 30px; height: 30px; object-fit: contain"><span>HuhbyteAI</span></a>
+  <nav class="navs" aria-label="Page" style="display: flex; gap: 28px">
+    <a class="navlink" href="#agents">Agents</a>
+    <a class="navlink" href="#inside">Features</a>
+    <a class="navlink" href="#bio">Link in bio</a>
+    <a class="navlink" href="#savings">Savings</a>
+    <a class="navlink" href="#waitlist">Waitlist</a>
+    <a class="navlink" href="#story">Story</a>
+  </nav>
+  <a class="navlink" href="https://github.com/dataanalystram/Openbuffer" style="font-weight: 700; border: 2px solid var(--ink); border-radius: 4px; padding: 8px 16px">GitHub</a>
+</header>
+
+<div class="wrap inmodewrap"><div class="inmode" role="group" aria-label="Who is reading">
+  <button class="mbtn" type="button" aria-pressed="true" data-mode="human">For humans</button>
+  <button class="mbtn" type="button" aria-pressed="false" data-mode="agent">For agents</button>
+</div></div>
+
+<main id="top" class="wrap" style="padding-top: clamp(16px,3vw,40px); padding-bottom: 0">
+  <div class="hero">
+    <div style="display: flex; flex-direction: column; gap: clamp(22px,2.6vw,36px); padding-bottom: clamp(8px,3vw,56px)">
+      <h1 class="h1"><span>Post</span><span>everywhere.</span><span>Your agent</span><span>can too.</span></h1>
+      <p class="lede">A free Buffer and Linktree in one app you host. Every button is also an API.</p>
+      <div style="display: flex; flex-wrap: wrap; gap: 8px 24px; align-items: center">
+        <a class="btn" href="#install">Get HuhbyteAI</a>
+        <a class="tlink" href="#waitlist">Join the cloud waitlist</a>
+      </div>
+      <ul class="net" aria-label="Networks"><li>Instagram</li><li>YouTube</li><li>TikTok</li><li>X</li><li>LinkedIn</li></ul>
+    </div>
+    <div style="width: min(100%, 540px); justify-self: center">
+      <div class="mas dance" role="img" aria-label="The HuhbyteAI capybara, wearing a cap and carrying a bag, dances while holding a phone and a stack of posts"></div>
+    </div>
+  </div>
+</main>
+</div>
+
+<!-- QUEUE -->
+<section id="queue" class="sec" style="background: var(--lav)">
+  <div class="wrap">
+    <h2 class="h2 rv" style="margin-bottom: clamp(28px,3.4vw,48px)">Try the queue</h2>
+    <div class="counter rv" aria-label="Try the queue">
+      <div style="padding: clamp(20px,2vw,28px); display: flex; flex-direction: column; gap: 22px">
+        <div style="display: flex; flex-direction: column; gap: 8px">
+          <div style="font-weight: 700">Pick a post</div>
+          <div id="q-posts" style="display: flex; flex-direction: column; gap: 8px"></div>
+          <div id="q-ownwrap" class="field" style="margin-top: 4px" hidden><label for="q-own" style="font-size: 15px">Your post</label><input id="q-own" type="text" maxlength="60" placeholder="Type a short post" autocomplete="off"></div>
+        </div>
+        <div style="display: flex; flex-direction: column; gap: 8px">
+          <div style="font-weight: 700">Pick channels</div>
+          <div id="q-chans" style="display: flex; flex-wrap: wrap; gap: 8px"></div>
+          <div id="q-skip" style="font-size: 15px; color: var(--ink2); min-height: 22px"></div>
+        </div>
+      </div>
+      <div style="display: flex; flex-direction: column; min-width: 0; border-left: 1px solid var(--line)">
+        <div style="display: flex; flex-wrap: wrap; gap: 20px 32px; align-items: flex-start; justify-content: space-between; padding: clamp(16px,2vw,24px) clamp(16px,2vw,24px) 30px">
+          <button class="disp" id="q-take" type="button">
+            <span class="say">Take a<br>number</span>
+            <span class="mouth" aria-hidden="true"></span>
+            <span class="clipper" aria-hidden="true"><span id="q-tick" class="tick feed0"><i>No.</i><b id="q-no">045</b></span></span>
+          </button>
+          <div style="flex: 1 1 320px; display: flex; flex-direction: column; align-items: flex-start; gap: 2px; min-height: 92px">
+            <p id="q-msg" aria-live="polite" style="margin: 0; font-weight: 500; max-width: 62ch; text-wrap: pretty; line-height: 1.35"></p>
+            <div style="display: flex; flex-wrap: wrap; gap: 0 22px"><button type="button" class="ulink" id="q-shuffle">Shuffle</button><button type="button" class="ulink" id="q-reset">Start over</button></div>
+            <p style="margin: 2px 0 0; font-size: 14px; color: var(--ink2)">Click an open slot to place the post there. Click a booked slot to pull it out.</p>
+          </div>
+        </div>
+        <div class="board" tabindex="0" role="region" aria-label="Posting slots for the next five days"><div class="grid" id="q-grid"></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- HEADLESS -->
+<section id="agents" class="dark sec" style="background: var(--ink); color: #F2EDFC">
+  <div class="wrap">
+    <div class="hgrid">
+      <div class="poster rv"><div class="mas idle scrub" role="img" aria-label="The capybara winks and holds up a phone"></div></div>
+      <div style="display: flex; flex-direction: column; gap: 28px; min-width: 0">
+        <h2 class="h2 rv" style="color: var(--lav)">Headless.</h2>
+        <p class="lede rv" style="max-width: 36ch">Every button is also an API, an MCP tool and a terminal command. Any agent can run all of it.</p>
+        <div class="rv" style="display: flex; flex-wrap: wrap; gap: 12px 56px">
+          <div><div style="font-family: var(--disp); font-weight: 900; font-size: clamp(76px,8vw,116px); line-height: .82; color: var(--lav)">204</div><div style="margin-top: 8px">MCP tools</div></div>
+          <div><div style="font-family: var(--disp); font-weight: 900; font-size: clamp(76px,8vw,116px); line-height: .82; color: var(--lav)">236</div><div style="margin-top: 8px">API actions</div></div>
+        </div>
+        <div style="display: flex; flex-direction: column; gap: 12px; margin-top: 8px">
+          <div id="way-tabs" role="tablist" aria-label="Ways to schedule" style="display: flex; flex-wrap: wrap; gap: 4px 28px"></div>
+          <pre id="way-code" style="background: #211A33; padding: 24px; border-radius: 4px; min-height: 236px; color: #F2EDFC"></pre>
+          <pre style="background: #F2EDFC; color: var(--ink); padding: 20px 24px; border-radius: 4px">{ "status": "needs_confirmation",
+  "preview": "Schedule a post to 3 channels",
+  "confirm_token": "…" }</pre>
+        </div>
+        <p style="margin: 0; font-weight: 700; max-width: 44ch">You approve first. Keys are scoped. <span style="font-family: var(--mono); font-weight: 500; color: var(--lav)">huhqueue agents pause</span> stops them all.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- APP -->
+<section id="app" class="sec" style="background: var(--white)">
+  <div class="wrap">
+    <h2 class="h2 rv" style="max-width: 9em">A full app, not a demo</h2>
+    <div id="screen-tabs" role="tablist" aria-label="Screens" style="display: flex; flex-wrap: wrap; gap: 4px 36px; margin-top: clamp(28px,3.4vw,48px)"></div>
+    <figure class="frame" style="margin: 24px 0 0"><img id="screen-img" class="shot" src="/welcome/img/shot-compose.webp" alt="HuhbyteAI composer editing an Instagram post with the capybara mascot and a live preview beside it" style="border-radius: 0"></figure>
+  </div>
+</section>
+
+<!-- INSIDE -->
+<section id="inside" class="sec" style="background: var(--white); padding-inline: 0">
+  <div class="wrap" style="display: flex; flex-wrap: wrap; align-items: end; justify-content: space-between; gap: 20px 64px; margin-bottom: clamp(28px,3.4vw,48px)">
+    <h2 class="h2 rv" style="flex: 1 1 520px; max-width: 8em">Everything in the box</h2>
+    <p class="lede" style="flex: 0 1 340px">One app, no tiers. Hover to pause.</p>
+  </div>
+  <div style="display: flex; flex-direction: column; gap: 14px">
+    <div class="mq " style="--d: 80s"><div class="mqt"><span class="fc t">Publish</span><span class="fc">Live previews</span><span class="fc">Instagram Reels</span><span class="fc">Carousels</span><span class="fc">Stories</span><span class="fc">YouTube Shorts</span><span class="fc">TikTok</span><span class="fc">X threads</span><span class="fc">LinkedIn PDFs</span><span class="fc">First comment</span><span class="fc">Queue</span><span class="fc">Calendar</span><span class="fc">Drafts</span><span class="fc">Bulk upload</span><span class="fc">Buffer CSV import</span><span class="fc">RSS auto-post</span><span class="fc">Evergreen recycling</span><span class="fc">End cards</span><span class="fc">Duplicate guard</span><span class="fc">Auto retries</span><span class="fc t">Create</span><span class="fc">Image editor</span><span class="fc">AI writer</span><span class="fc">Alt text</span><span class="fc">Post ideas</span><span class="fc">Hashtag groups</span><span class="fc">Templates</span><span class="fc">Media library</span><span class="fc">Unsplash</span><span style="display: contents" aria-hidden="true"><span class="fc t">Publish</span><span class="fc">Live previews</span><span class="fc">Instagram Reels</span><span class="fc">Carousels</span><span class="fc">Stories</span><span class="fc">YouTube Shorts</span><span class="fc">TikTok</span><span class="fc">X threads</span><span class="fc">LinkedIn PDFs</span><span class="fc">First comment</span><span class="fc">Queue</span><span class="fc">Calendar</span><span class="fc">Drafts</span><span class="fc">Bulk upload</span><span class="fc">Buffer CSV import</span><span class="fc">RSS auto-post</span><span class="fc">Evergreen recycling</span><span class="fc">End cards</span><span class="fc">Duplicate guard</span><span class="fc">Auto retries</span><span class="fc t">Create</span><span class="fc">Image editor</span><span class="fc">AI writer</span><span class="fc">Alt text</span><span class="fc">Post ideas</span><span class="fc">Hashtag groups</span><span class="fc">Templates</span><span class="fc">Media library</span><span class="fc">Unsplash</span></span></div></div>
+    <div class="mq rev" style="--d: 64s"><div class="mqt"><span class="fc t">Community</span><span class="fc">Comment inbox</span><span class="fc">Mentions</span><span class="fc">Saved replies</span><span class="fc">AI replies</span><span class="fc">Comment themes</span><span class="fc">Assign and flag</span><span class="fc">Comment to post</span><span class="fc">Bulk reply</span><span class="fc t">Insights</span><span class="fc">Date ranges</span><span class="fc">Best times</span><span class="fc">Audience</span><span class="fc">Story numbers</span><span class="fc">Reels stats</span><span class="fc">CSV export</span><span class="fc">PDF reports</span><span style="display: contents" aria-hidden="true"><span class="fc t">Community</span><span class="fc">Comment inbox</span><span class="fc">Mentions</span><span class="fc">Saved replies</span><span class="fc">AI replies</span><span class="fc">Comment themes</span><span class="fc">Assign and flag</span><span class="fc">Comment to post</span><span class="fc">Bulk reply</span><span class="fc t">Insights</span><span class="fc">Date ranges</span><span class="fc">Best times</span><span class="fc">Audience</span><span class="fc">Story numbers</span><span class="fc">Reels stats</span><span class="fc">CSV export</span><span class="fc">PDF reports</span></span></div></div>
+    <div class="mq " style="--d: 56s"><div class="mqt"><span class="fc t">Team</span><span class="fc">Six roles</span><span class="fc">Per-channel access</span><span class="fc">Approvals</span><span class="fc">Post notes</span><span class="fc">Invites</span><span class="fc">2FA</span><span class="fc">Audit log</span><span class="fc t">Link in bio</span><span class="fc">16 themes</span><span class="fc">Email sign-ups</span><span class="fc">QR codes</span><span class="fc">Custom domain</span><span class="fc">Scheduled links</span><span class="fc">Click analytics</span><span class="fc">Embeds</span><span style="display: contents" aria-hidden="true"><span class="fc t">Team</span><span class="fc">Six roles</span><span class="fc">Per-channel access</span><span class="fc">Approvals</span><span class="fc">Post notes</span><span class="fc">Invites</span><span class="fc">2FA</span><span class="fc">Audit log</span><span class="fc t">Link in bio</span><span class="fc">16 themes</span><span class="fc">Email sign-ups</span><span class="fc">QR codes</span><span class="fc">Custom domain</span><span class="fc">Scheduled links</span><span class="fc">Click analytics</span><span class="fc">Embeds</span></span></div></div>
+    <div class="mq rev" style="--d: 50s"><div class="mqt"><span class="fc t">Growth</span><span class="fc">Short links</span><span class="fc">UTM builder</span><span class="fc">Campaigns</span><span class="fc">Channel groups</span><span class="fc">Saved views</span><span class="fc">Webhooks</span><span class="fc t">Agents</span><span class="fc">MCP</span><span class="fc">REST API</span><span class="fc">Terminal</span><span class="fc">Cmd K</span><span class="fc">Scoped keys</span><span class="fc">Approval first</span><span class="fc">Daily caps</span><span class="fc">Kill switch</span><span class="fc">llms.txt</span><span style="display: contents" aria-hidden="true"><span class="fc t">Growth</span><span class="fc">Short links</span><span class="fc">UTM builder</span><span class="fc">Campaigns</span><span class="fc">Channel groups</span><span class="fc">Saved views</span><span class="fc">Webhooks</span><span class="fc t">Agents</span><span class="fc">MCP</span><span class="fc">REST API</span><span class="fc">Terminal</span><span class="fc">Cmd K</span><span class="fc">Scoped keys</span><span class="fc">Approval first</span><span class="fc">Daily caps</span><span class="fc">Kill switch</span><span class="fc">llms.txt</span></span></div></div>
+  </div>
+  <div class="wrap" style="margin-top: clamp(24px,3vw,40px)"><button type="button" class="tlink" data-mode="agent" style="background: none; border: 0; padding: 0">The full list, as text, in the agent view</button></div>
+</section>
+
+<!-- BIO -->
+<section id="bio" class="sec" style="background: var(--sig)">
+  <div class="wrap" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(380px,100%),1fr)); gap: 48px clamp(40px,6vw,96px); align-items: center">
+    <div style="display: flex; flex-direction: column; gap: 28px">
+      <h2 class="h2 rv">Linktree, too</h2>
+      <ul class="bio-list rv">
+        <li>16 themes</li>
+        <li>Email sign-ups</li>
+        <li>QR codes</li>
+        <li>Your own domain</li>
+        <li>Scheduled links</li>
+        <li>Click analytics</li>
+      </ul>
+    </div>
+    <div class="rv" style="width: min(100%, 340px); justify-self: center">
+      <div class="frame"><img src="/welcome/img/bio-page.webp" alt="A link-in-bio page for a pottery studio made with HuhbyteAI: avatar, three link buttons, an email sign-up box and social icons"></div>
+    </div>
+  </div>
+</section>
+
+<!-- SAVINGS -->
+<section id="savings" class="sec sav" style="background: var(--lav)">
+  <div class="wrap">
+    <div style="display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 24px 48px">
+      <div style="flex: 1 1 520px; display: flex; flex-direction: column; gap: 22px">
+        <h2 class="h2 rv" style="max-width: 9em">Your tools, one receipt</h2>
+        <p class="lede rv" style="max-width: 40ch">I love every one of these products. Together they add up. Pick the ones you pay for.</p>
+      </div>
+      <div class="poster" style="width: 250px; padding: 8px 8px 0"><div id="r-pop" class="pop0" style="mix-blend-mode: multiply"><div class="bill" role="img" aria-label="The capybara counts its cash, opens the bill, and slowly runs out of money"></div></div></div>
+    </div>
+    <div class="sgrid">
+      <div style="min-width: 0">
+        <div id="r-presets" role="group" aria-label="Start from" style="display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 26px; align-items: center"></div>
+        <div id="r-groups"></div>
+      </div>
+      <div style="min-width: 0">
+        <div class="receipt" role="region" aria-label="Your receipt">
+          <div style="text-align: center; padding-bottom: 14px"><div style="font-family: var(--disp); font-weight: 900; font-size: 52px; line-height: .9">Per month</div><div id="r-bill" style="margin-top: 6px"></div></div>
+          <div id="r-today"><div class="rhead">Replaced today</div><div id="r-today-lines"></div></div>
+          <div id="r-soon"><div class="rhead">Coming soon</div><div id="r-soon-lines"></div></div>
+          <p id="r-none" hidden style="margin: 0; padding: 18px 0; border-top: 1.5px dashed #B9A7DA">Pick a tool to start the receipt.</p>
+          <div class="rrow" style="border-top: 3px solid var(--ink); font-weight: 600"><span>Total today</span><b id="r-total"></b></div>
+          <div class="rrow" style="border-top: 1.5px dashed #B9A7DA"><span>HuhbyteAI</span><b>$0.00</b><small>free and open source</small></div>
+          <div style="border-top: 3px solid var(--ink); margin-top: 6px; padding-top: 18px">
+            <div style="font-family: var(--disp); font-weight: 900; font-size: 36px; line-height: 1">You save</div>
+            <div style="margin-top: 14px">
+              <div style="font-size: 14px; color: var(--ink2)">What HuhbyteAI replaces today</div>
+              <div style="display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 12px"><span id="r-yr-today" style="font-family: var(--disp); font-weight: 900; font-size: clamp(60px,6.4vw,88px); line-height: .85"></span><span style="font-weight: 600">a year</span><span style="color: var(--ink2)"><span id="r-mo-today"></span> a month</span></div>
+            </div>
+            <div id="r-all" style="margin-top: 18px; padding-top: 14px; border-top: 1.5px dashed #B9A7DA">
+              <div style="font-size: 14px; color: var(--ink2)">When the all-in-one ships</div>
+              <div style="display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 12px"><span id="r-yr-all" style="font-family: var(--disp); font-weight: 900; font-size: clamp(60px,6.4vw,88px); line-height: .85; color: #B8260A"></span><span style="font-weight: 600">a year</span><span style="color: var(--ink2)"><span id="r-mo-all"></span> a month</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <p style="margin: 28px 0 0; font-size: 15px; max-width: 70ch">USD per month, checked 25 Nov 2026, yearly billing where offered. You host HuhbyteAI yourself. The cloud version is on the waitlist below.</p>
+  </div>
+</section>
+
+<!-- STUDIO -->
+<section id="studio" class="sec" style="background: var(--white)">
+  <div class="wrap">
+    <div style="display: flex; flex-direction: column; gap: 22px">
+      <div style="font-weight: 700">Our second product</div>
+      <h2 class="h2 rv" style="max-width: 8em">HuhQueue Studio</h2>
+      <p class="lede rv">Paste one link. Approve one week. It runs as a hosted app today.</p>
+    </div>
+    <ul class="steps4" style="margin-top: clamp(28px,3vw,44px)"><li>An agent researches it</li><li>Renders it in your brand</li><li>Learns your corrections</li><li>You approve, then Buffer</li></ul>
+
+    <figure class="rv" style="margin: clamp(28px,3vw,44px) 0 0">
+      <div class="take" role="img" aria-label="Animation: one long game trailer is scanned, cut into five vertical captioned clips, and spread across Monday to Friday at 11:00">
+        <div>
+          <div class="tvid"><div class="tsun"></div><div class="tb tb1"></div><div class="tb tb2"></div><div class="tb tb3"></div><div class="tb tb4"></div><div class="tb tb5"></div><div class="tb tb6"></div><div class="tlabel">Game trailer<span>2:30</span></div><div class="tplay"></div></div>
+          <div class="ttl"><i class="seg s1"></i><i class="seg s2"></i><i class="seg s3"></i><i class="seg s4"></i><i class="seg s5"></i><b class="head"></b></div>
+        </div>
+        <div class="tclips">
+        <div class="tcol"><div class="tc"><div class="tf  c1"><div class="cap"><em>Wait</em> for it</div></div></div><span class="td">Mon<span class="tt"> 11:00</span></span></div>
+        <div class="tcol"><div class="tc"><div class="tf b v2 c2"><div class="cap"><em>Chapter</em> two</div></div></div><span class="td">Tue<span class="tt"> 11:00</span></span></div>
+        <div class="tcol"><div class="tc"><div class="tf d c3"><div class="cap"><em>That</em> ending</div></div></div><span class="td">Wed<span class="tt"> 11:00</span></span></div>
+        <div class="tcol"><div class="tc"><div class="tf v2 c4"><div class="cap"><em>Watch</em> twice</div></div></div><span class="td">Thu<span class="tt"> 11:00</span></span></div>
+        <div class="tcol"><div class="tc"><div class="tf b c5"><div class="cap"><em>Part</em> three</div></div></div><span class="td">Fri<span class="tt"> 11:00</span></span></div>
+        </div>
+      </div>
+      <figcaption style="margin-top: 10px; font-weight: 700">One video, a week of clips. Hover to pause.</figcaption>
+    </figure>
+
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(420px,100%),1fr)); gap: 24px; margin-top: clamp(28px,3vw,44px); align-items: stretch">
+      <figure style="margin: 0" class="rv"><div class="frame"><img src="/welcome/img/studio-planner.webp" alt="HuhQueue Studio planner, week view, with posts from five Buffer channels"></div><figcaption style="margin-top: 10px; font-weight: 700">The planner</figcaption></figure>
+      <div style="padding: clamp(22px,3vw,36px); background: var(--lav); border-radius: 6px; display: flex; flex-direction: column; justify-content: center; gap: 22px">
+        <div style="font-family: var(--disp); font-weight: 900; font-size: clamp(40px,4.6vw,68px); line-height: .9">Should Studio be open source?</div>
+        <div role="group" aria-label="Your vote" style="display: flex; flex-wrap: wrap; gap: 10px">
+          <button class="btn vote" id="vote-yes" type="button" aria-pressed="false">Yes, open source it</button>
+          <button class="btn ghost vote" id="vote-no" type="button" aria-pressed="false">Hosted is fine</button>
+        </div>
+        <p id="vote-msg" aria-live="polite" style="margin: 0; min-height: 28px; font-weight: 500"><span id="vote-msg-text">Tell me which you would use.</span> <a id="vote-link" href="#waitlist" hidden style="font-weight: 700; text-underline-offset: 4px">Join the waitlist</a></p>
+      </div>
+    </div>
+    <p style="margin: 24px 0 0; font-size: 15px">Built on the Buffer API. Not made or endorsed by Buffer.</p>
+  </div>
+</section>
+
+<!-- INSTALL -->
+<section id="install" class="sec" style="background: var(--paper)">
+  <div class="wrap" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(420px,100%),1fr)); gap: 48px clamp(40px,6vw,96px); align-items: start">
+    <div style="display: flex; flex-direction: column; gap: 24px; min-width: 0">
+      <h2 class="h2 rv">Run it yourself</h2>
+      <div id="inst-tabs" role="tablist" aria-label="Install with" style="display: flex; gap: 28px"></div>
+      <div class="dark" style="background: var(--ink); color: #F2EDFC; border-radius: 4px; padding: 24px; display: flex; flex-direction: column; gap: 18px">
+        <pre id="inst-code" style="min-height: 124px"></pre>
+        <button id="inst-copy" type="button" style="align-self: flex-start; background: #F2EDFC; color: #141020; border: 0; border-radius: 4px; min-height: 44px; padding: 0 18px; font-weight: 700">Copy commands</button>
+      </div>
+      <p style="margin: 0">Then open <strong>localhost:8787</strong>. You add your own developer keys for each network: <a href="https://github.com/dataanalystram/Openbuffer/blob/main/docs/CONNECT_INTEGRATIONS.md" style="font-weight: 700; text-underline-offset: 4px">connect guide</a>.</p>
+    </div>
+    <ul class="bio-list rv" style="padding-top: 6px">
+      <li>MIT licence</li>
+      <li>No paid tier</li>
+      <li>Your server, your data</li>
+      <li>Import from Buffer</li>
+    </ul>
+  </div>
+</section>
+
+<!-- WAITLIST -->
+<section id="waitlist" class="dark sec" style="background: var(--ink); color: #F2EDFC">
+  <div class="wrap" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(420px,100%),1fr)); gap: 56px clamp(40px,6vw,96px); align-items: start">
+    <div style="display: flex; flex-direction: column; gap: 30px; min-width: 0">
+      <h2 class="h2 rv" style="color: var(--lav)">Join the waitlist</h2>
+      <div>
+        <div style="font-weight: 700; margin-bottom: 10px">Next, free and open source</div>
+        <ul class="road">
+          <li><span>Generate videos</span><em>Soon</em></li>
+          <li><span>Edit videos</span><em>Soon</em></li>
+          <li><span>Schedule them</span><em class="ready">Ready</em></li>
+          <li><span>Auto-reply to comments and DMs</span><em>Soon</em></li>
+        </ul>
+        <p style="margin: 14px 0 0; max-width: 44ch">The kind of automation ManyChat and Chatfuel do, in the same app as everything above.</p>
+      </div>
+      <p style="margin: 0; font-size: clamp(20px,1.8vw,24px); line-height: 1.35; max-width: 34ch; text-wrap: pretty">I love every social app I use. Each one does its job well. But with this many tools and subscriptions, I ended up with no money. So I'm putting them in one app and making it free. I'd love to hear what you think.</p>
+    </div>
+
+    <div class="form rv" style="min-width: 0">
+      <div id="wl-done" hidden style="display: flex; flex-direction: column; gap: 12px; padding: 12px 0" aria-live="polite">
+        <div style="font-family: var(--disp); font-weight: 900; font-size: clamp(48px,5vw,72px); line-height: .9">You're on the list</div>
+        <p style="margin: 0; max-width: 36ch">Thank you. I'll write when there's news. If you have thoughts, sign up again with a note.</p>
+      </div>
+      <form id="wl-form" method="post" action="/waitlist" novalidate style="display: flex; flex-direction: column; gap: 20px">
+        <fieldset style="border: 0; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 10px; min-width: 0">
+          <legend style="font-weight: 700; padding: 0; margin-bottom: 10px">What should I tell you about?</legend>
+          <label class="opt"><input id="wl-cloud" name="cloud" type="checkbox"><span style="display: flex; flex-direction: column; line-height: 1.25"><span style="font-weight: 700">HuhbyteAI in the cloud</span><span style="font-size: 15px; color: var(--ink2)">Hosted for you. No server to run.</span></span></label>
+          <label class="opt"><input id="wl-studio" name="studio" type="checkbox"><span style="display: flex; flex-direction: column; line-height: 1.25"><span style="font-weight: 700">HuhQueue Studio, open source</span><span style="font-size: 15px; color: var(--ink2)">A self-hosted, open source release.</span></span></label>
+        </fieldset>
+        <div class="field"><label for="wl-email">Email</label><input id="wl-email" name="email" type="email" autocomplete="email" placeholder="you@example.com"></div>
+        <div class="field"><label for="wl-note">Your thoughts <span style="font-weight: 400; color: var(--ink2)">(optional)</span></label><textarea id="wl-note" name="note" maxlength="1000" placeholder="What would you want it to do?"></textarea></div>
+        <div aria-hidden="true" style="position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden"><label>Website<input id="wl-website" name="website" type="text" tabindex="-1" autocomplete="off"></label></div>
+        <p id="wl-err" aria-live="polite" style="margin: 0; min-height: 22px; font-weight: 600; color: #B8260A"></p>
+        <p class="consent" style="margin: 0; font-size: 15px; color: var(--ink2)">By joining you agree that we keep your email and note to write to you about the lists you picked. Encrypted, never shared, deleted when you ask. <a href="/privacy" style="text-decoration: underline">Privacy</a></p>
+        <button id="wl-send" class="btn sig" type="submit" style="width: 100%">Join the waitlist</button>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- STORY -->
+<section id="story" class="sec" style="background: var(--white)">
+  <div class="wrap">
+    <h2 class="h2 rv">Our story</h2>
+    <div class="tl">
+      <i class="tlline" aria-hidden="true"></i>
+      <ol class="tlist">
+        <li class="rv"><span class="dot" aria-hidden="true"></span><h3>We started a channel.</h3><p>huhbyte.ai on Instagram. Faceless, and brand new to social media.</p></li>
+        <li class="rv"><span class="dot" aria-hidden="true"></span><h3>Editing videos beat us.</h3><p>We had never edited a video before.</p></li>
+        <li class="rv"><span class="dot" aria-hidden="true"></span><h3>So we built HuhQueue.</h3><p>It edits the videos, so you don't have to feel the same.</p></li>
+        <li class="rv"><span class="dot" aria-hidden="true"></span><h3>Then we opened HuhbyteAI.</h3><p>An open source Buffer, so nobody has to pay to schedule.</p></li>
+        <li class="rv"><span class="dot" aria-hidden="true"></span><h3>Still no followers.</h3><p>Maybe we are doing it wrong. So we let an agent handle it.</p></li>
+      </ol>
+    </div>
+    <div class="rv" style="margin-top: clamp(48px,6vw,88px); display: grid; grid-template-columns: repeat(auto-fit, minmax(min(320px,100%),1fr)); gap: 32px clamp(32px,5vw,80px); align-items: center">
+      <div class="poster" style="width: min(100%, 360px); justify-self: center"><div class="mas dance" role="img" aria-label="The HuhbyteAI capybara dances while holding a phone and a stack of posts"></div></div>
+      <div style="display: flex; flex-direction: column; gap: 22px; min-width: 0">
+        <h3 class="h2" style="font-size: clamp(52px,7vw,104px)">Welcome to the HuhByte family</h3>
+        <p class="lede" style="max-width: 34ch">We started as a channel. Now we build the tools. Follow along and let's grow together. Love you all.</p>
+        <div style="display: flex; flex-wrap: wrap; gap: 12px 14px">
+          <a class="btn sig" href="https://www.instagram.com/huhbyte.ai/"><svg class="ic" aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="5"></rect><circle cx="12" cy="12" r="4"></circle><circle cx="17.5" cy="6.5" r=".6" fill="currentColor"></circle></svg>Follow @huhbyte.ai</a>
+          <a class="btn starbtn" href="https://github.com/dataanalystram/Openbuffer"><svg class="ic" aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M12 3l2.7 5.8 6.3.7-4.7 4.3 1.3 6.2L12 17l-5.6 3 1.3-6.2L3 9.5l6.3-.7z"></path></svg>Star on GitHub</a>
+          <a class="btn ghost" href="#waitlist">Tell us what you like</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="foot" style="background: var(--paper)">
+  <div class="wrap" style="padding-top: clamp(40px,5vw,72px); display: grid; grid-template-columns: repeat(auto-fit, minmax(min(300px,100%),1fr)); gap: 24px 48px; align-items: end">
+    <div style="display: flex; flex-direction: column; gap: 28px; padding-bottom: clamp(24px,4vw,56px)">
+      <div style="font-family: var(--disp); font-weight: 900; font-size: clamp(76px,12vw,190px); line-height: .8; letter-spacing: -.018em">HuhbyteAI</div>
+      <div style="display: flex; flex-wrap: wrap; gap: 4px 28px; align-items: center">
+        <a href="https://github.com/dataanalystram/Openbuffer">GitHub</a>
+        <a href="https://github.com/dataanalystram/Openbuffer/blob/main/SETUP.md">Setup</a>
+        <a href="https://github.com/dataanalystram/Openbuffer/blob/main/LICENSE">MIT licence</a>
+      </div>
+      <div style="color: var(--ink2); font-size: 15px">Made by HuhByte, 2026</div>
+    </div>
+    <div class="rv" style="width: min(100%, 400px); justify-self: center; mix-blend-mode: multiply"><div class="byeanim" role="img" aria-label="The capybara waves goodbye. Bye, gorgeous!"></div></div>
+  </div>
+</footer>
+</div>
+
+<!-- AGENT VIEW -->
+<div id="agent" class="dark" hidden style="background: var(--ink); color: #F2EDFC; min-height: 900px">
+  <div class="wrap" style="padding-top: 24px; padding-bottom: clamp(56px,6vw,88px)">
+    <header style="display: flex; align-items: center; gap: 16px; min-height: 56px">
+      <img src="/welcome/img/mark.png" alt="" style="width: 30px; height: 30px; object-fit: contain">
+      <span style="font-weight: 800; font-size: 23px; letter-spacing: -.02em">HuhbyteAI</span>
+    </header>
+    <div class="inmode" role="group" aria-label="Who is reading">
+      <button class="mbtn" type="button" aria-pressed="true" data-mode="human">For humans</button>
+      <button class="mbtn" type="button" aria-pressed="false" data-mode="agent">For agents</button>
+    </div>
+    <div style="display: flex; flex-wrap: wrap; align-items: end; justify-content: space-between; gap: 20px 48px; margin: clamp(24px,3vw,40px) 0 28px">
+      <div style="display: flex; flex-direction: column; gap: 14px">
+        <h1 class="h2" style="color: var(--lav)">For agents</h1>
+        <p class="lede" style="max-width: 40ch">This whole page as plain Markdown. Also at <a href="/welcome.md" style="text-underline-offset: 4px">/welcome.md</a>.</p>
+      </div>
+      <div style="display: flex; flex-wrap: wrap; gap: 10px">
+        <button id="agent-copy" type="button" class="btn sig">Copy all</button>
+        <button type="button" class="btn ghost light" data-mode="human">Back to the human page</button>
+      </div>
+    </div>
+    <pre id="agent-pre" class="agentpre" tabindex="0"># HuhbyteAI
+Free, open source, self-hosted social media scheduler, link in bio and inbox. Every button is also an API, an MCP tool and a terminal command, so any agent can run all of it. MIT licensed. No paid tier.
+Networks: Instagram, YouTube, TikTok, X, LinkedIn.
+Code: https://github.com/dataanalystram/Openbuffer
+Run it: docker compose up -d   or   python -m huhqueue serve   (then open localhost:8787, add your own developer keys per network)
+
+## Headless
+- 204 MCP tools and 236 API actions, all generated from one action registry.
+- Ways in: MCP (tool schedule_post), terminal (huhqueue schedule --channel instagram:handle --caption &quot;...&quot; --media file.mp4 --at 2026-11-27T19:00), REST (POST /api/actions/post.schedule:run), Cmd K command bar in the app.
+- Public actions first return status needs_confirmation with a preview and a single-use confirm_token (valid 10 minutes). A human approves first.
+- Keys are scoped (read, write, publish, comments, admin) with tool allow-lists, daily caps and expiry.
+- Kill switch: huhqueue agents pause. Agent calls then get HTTP 423 until resumed.
+- Agent docs served by the app: /llms.txt, /llms-full.txt, /agents, /openapi.json.
+
+## Everything in the box
+Publish: live previews, Instagram posts / Reels / Stories / carousels, YouTube Shorts and videos, TikTok video and photo posts, X posts and threads, LinkedIn text / images / PDFs / video, first comment, posting slots and queue, drag to reorder / shuffle / prioritise, calendar by week and month, drafts and ideas board, bulk upload up to 500 posts, Buffer CSV import, RSS auto-post, evergreen recycling, follow end card on videos, duplicate guard, retries and missed-post recovery.
+Create: image editor, AI writer (your own model), AI alt text, AI post ideas, hashtag groups and suggestions, templates, media library with folders, Unsplash search.
+Community: comment inbox, mentions, saved replies, AI reply suggestions, comment themes, assign and flag, turn a comment into a post, bulk reply.
+Insights: custom date ranges, compare with previous period, best times to post, audience and demographics, story numbers saved before they expire, Reels and hashtag stats, CSV export, branded PDF reports by email.
+Team: six roles, access per channel, approvals, post notes and @mentions, invites, two-factor sign-in, audit log, notifications.
+Link in bio: 16 themes, email sign-ups, QR codes, your own domain, scheduled links, click analytics, social icons and embeds, import and export.
+Growth: short links, UTM builder, campaigns, channel groups, saved views, webhooks for Zapier / Make / n8n.
+Agents: MCP server, REST API with OpenAPI, terminal commands, Cmd K command bar, scoped keys, approval first, daily caps, kill switch, llms.txt.
+
+## Savings (USD per month, checked 25 Nov 2026, yearly billing where offered)
+Replaced by HuhbyteAI today:
+- Buffer Essentials, 5 channels: $25
+- Later Growth: $37.50
+- SocialBee Bootstrap: $29
+- Hootsuite Standard, per user: $99
+- Sprout Social Standard, per seat: $199
+- Linktree Pro: $12
+Coming soon in HuhbyteAI (free and open source):
+- ManyChat Pro: $29
+- Chatfuel Business S: $18
+- Descript Creator: $24
+- OpusClip Starter: $15
+- HeyGen Creator: $29
+HuhbyteAI: $0.
+Examples: Solo creator (Buffer, Linktree, ManyChat, Descript, HeyGen) = $119 a month; $444 a year saved today, $1,428 a year when the all-in-one ships. Team (Sprout, Linktree, ManyChat, Descript, OpusClip, HeyGen) = $308 a month; $2,532 a year today, $3,696 a year with everything.
+You host HuhbyteAI yourself, so your server is your own cost.
+
+## HuhQueue Studio (second product)
+Paste one link. Approve one week. An agent researches the story, renders it in your brand, learns your corrections, and plans it in Buffer once you approve. Runs as a hosted app today. Built on the Buffer API, not made or endorsed by Buffer. Open question: should Studio be open source? Answer on the human page or join the waitlist.
+
+## Waitlist
+Two lists: HuhbyteAI in the cloud (hosted for you), and HuhQueue Studio as open source (self-hosted).
+Next, free and open source: generate videos (soon), edit videos (soon), schedule them (ready), auto-reply to comments and DMs (soon), the kind of automation ManyChat and Chatfuel do, in the same app.
+Note from the maker: I love every social app I use. Each one does its job well. But with this many tools and subscriptions, I ended up with no money. So I&#x27;m putting them in one app and making it free.
+
+## Our story
+We are new to social media. We started the huhbyte.ai Instagram channel, a faceless channel (https://www.instagram.com/huhbyte.ai/). We had never edited videos and editing was the hard part, so we built HuhQueue Studio to automate video editing. HuhbyteAI is our open source Buffer alternative, so nobody has to pay to schedule. We still have no followers, maybe we are doing it wrong, so we let an agent handle it. If you like it: follow https://www.instagram.com/huhbyte.ai/, star https://github.com/dataanalystram/Openbuffer on GitHub, and tell us what you like. Welcome to the HuhByte family. Love you all.
+</pre>
+  </div>
+</div>
+</div>
+<script src="/welcome/landing.js" defer></script>
+</body>
+</html>
